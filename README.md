@@ -2,7 +2,16 @@
 
 ## PDF met Latex of Typst 
 
-TODO: [stukje verwerken format etc in myst.yml]
+Om aan te geven welk type PDF je wilt bouwen, zet je dit in je `myst.yml` bestand onder `exports`.  
+Bijvoorbeeld:
+
+```yaml
+exports:
+  - format: pdf      # Voor LaTeX export
+    output: exports/book.pdf
+  - format: typst    # Voor Typst export
+    output: exports/book.pdf
+```
 
 Ga naar Actions > klik op "Myst PDF Builder [LaTeX]" of "Myst PDF Builder [Typst]" > klik op "Run workflow" > klik op "Run workflow" in dropdown.
 
