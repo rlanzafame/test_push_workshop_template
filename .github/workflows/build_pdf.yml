@@ -17,7 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: engineervix/python-latex:3.12-slim-bookworm
+    container: luukfroling/myst-latex:latest  # <-- your pushed image
 
     steps:
       - uses: actions/checkout@v3
@@ -26,16 +26,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-          
-      - name: Install Git
-        run: apt-get update && apt-get install -y git
-      
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18.x
-
-      - name: Install mystmd
-        run: pip install mystmd
 
       - name: Build PDFs
         run: myst build --pdf
