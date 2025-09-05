@@ -19,7 +19,7 @@ site:
   template: book-theme
   options:
     favicon: favicon.ico
-    style : https://github.com/luukfroling/JB2/blob/main/css/TUD_stylesheet.css
+    style: ./css/TUD_stylesheet.css
     logo: Figuren/site_logo.png
     folders: false
   
