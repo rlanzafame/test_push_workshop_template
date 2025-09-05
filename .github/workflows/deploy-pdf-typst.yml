@@ -1,4 +1,4 @@
-name: MyST Typst PDF Builder
+name: MyST PDF Builder [Typst]
 
 on:
   workflow_dispatch:

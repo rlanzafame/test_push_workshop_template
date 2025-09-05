@@ -3,7 +3,7 @@
 # - add functionality to use custom latex libraries etc
 #
 
-name: MyST PDF builder
+name: MyST PDF builder [LaTeX]
 
 on:
   workflow_dispatch:
