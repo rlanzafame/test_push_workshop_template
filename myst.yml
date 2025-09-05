@@ -19,8 +19,10 @@ site:
   template: book-theme
   options:
     favicon: favicon.ico
+    style : ./css/TUD_stylesheet.css
     logo: Figuren/site_logo.png
     folders: false
+  
   actions:
     - title: report issue
       url: https://github.com/TUD-SEEd/template/issues
