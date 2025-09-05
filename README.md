@@ -1,18 +1,25 @@
-# JB 2 Template
+# JupyterBook2 Template for TUD Books
 
-## PDF met Latex of Typst 
+This repository provides a template for creating books using [JupyterBook 2](https://jupyterbook.org/) tailored for the Delft University of Technology (TUD).
 
-Om aan te geven welk type PDF je wilt bouwen, zet je dit in je `myst.yml` bestand onder `exports`.  
-Bijvoorbeeld:
+## Features
 
-```yaml
-exports:
-  - format: pdf      # Voor LaTeX export
-    output: exports/book.pdf
-  - format: typst    # Voor Typst export
-    output: exports/book.pdf
-```
+- Pre-configured structure for TUD book projects
+- Example content and configuration files
+- Ready for deployment and customization
 
-Ga naar Actions > klik op "Myst PDF Builder [LaTeX]" of "Myst PDF Builder [Typst]" > klik op "Run workflow" > klik op "Run workflow" in dropdown.
+## Getting Started
 
-Een eventuele error voor de Typst action komt in de summary te staan. 
+1. Clone this repository.
+2. Follow the instructions.
+
+## Customization
+
+Edit the content and configuration files to suit your needs. Refer to the [JupyterBook documentation](https://mystmd.org/) for more details.
+
+## License
+
+Specify your license here.
+
+---
+Created for TUD book projects.
