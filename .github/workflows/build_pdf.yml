@@ -30,18 +30,6 @@ jobs:
       - name: Install mystmd
         run: pip install mystmd
 
-      - name: Install LaTeX
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            texlive-latex-extra \
-            texlive-fonts-recommended \
-            texlive-fonts-extra \
-            texlive-latex-recommended \
-            texlive-science \
-            texlive-xetex \
-            latexmk
-
       - name: Build PDFs
         run: myst build --pdf
 
