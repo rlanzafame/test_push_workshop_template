@@ -6,7 +6,6 @@
 name: MyST PDF builder [LaTeX]
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
 

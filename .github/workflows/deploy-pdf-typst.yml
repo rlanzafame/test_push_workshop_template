@@ -22,23 +22,10 @@ jobs:
           sudo apt-get install -y nodejs npm
           python -m pip install --upgrade pip
           pip install mystmd
-      - name: Check for Typst export
-        id: typst-check
-        run: |
-          python - <<'EOF'
-          import yaml, os
-          with open("myst.yml") as f:
-              cfg = yaml.safe_load(f)
-          exports = cfg.get("exports", [])
-          typst_found = any(e.get("format") == "typst" for e in exports)
-          print(f"typst_export={typst_found}")
-          with open(os.environ['GITHUB_ENV'], 'a') as env_file:
-              env_file.write(f"typst_export={typst_found}\n")
-          EOF
+      
 
       # 3️⃣ Install Typst (latest release via official install script)
       - name: Install Typst
-        if: env.typst_export == 'true'
         run: |
           curl -sSf https://typst.app/install.sh | sh
           echo "$HOME/.typst/bin" >> $GITHUB_PATH
@@ -46,12 +33,10 @@ jobs:
 
       # 4️⃣ Build PDFs with Typst
       - name: Build PDFs
-        if: env.typst_export == 'true'
         run: myst build --typst
 
       # 5️⃣ Commit and push exports folder
       - name: Commit and push exports
-        if: env.typst_export == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
