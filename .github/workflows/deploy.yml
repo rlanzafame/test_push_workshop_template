@@ -37,19 +37,6 @@ jobs:
           node-version: 18.x
       - name: Install MyST Markdown
         run: npm install -g mystmd
-      
-      - name: Build PDFs
-        run: myst build --pdf
-
-      - name: Commit and push exports folder
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A exports
-          timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          git commit -m "Update exports folder (${timestamp}) [skip ci]" || echo "No changes to commit"
-          git push origin main
-              
       - name: Build HTML Assets
         run: myst build --html
       - name: Upload artifact
