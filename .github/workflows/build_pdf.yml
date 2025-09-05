@@ -41,6 +41,7 @@ jobs:
         run: myst build --pdf
 
       - name: Commit and push exports folder
+        working-directory: /github/workspace
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -49,3 +50,4 @@ jobs:
           timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           git commit -m "Update exports folder (${timestamp}) [skip ci]" || echo "No changes to commit"
           git push origin main
+
