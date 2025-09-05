@@ -10,8 +10,8 @@ project:
   downloads:
     - id: output-pdf
   exports:
-    - format: typst
-      template: lapreprint-typst
+    - format: pdf
+      template: plain_latex_book
       output: exports/book.pdf
       id: output-pdf
   # To autogenerate a Table of Contents, run "myst init --write-toc"
