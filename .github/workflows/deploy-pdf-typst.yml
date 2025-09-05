@@ -18,17 +18,29 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
+
       - name: Install MyST Markdown
         run: npm install -g mystmd
-      
+
       - name: Install Typst
         run: |
           typst --version
 
+      # Build PDFs step with error capture
       - name: Build PDFs
-        run: myst build --typst
+        id: build_pdfs
+        run: |
+          set -o pipefail
+          myst build --typst 2> >(tee build_errors.log >&2) || true
+          if [ -s build_errors.log ]; then
+            echo "### Errors during PDF build:" >> $GITHUB_STEP_SUMMARY
+            cat build_errors.log >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
 
+      # Commit exports only if build succeeded
       - name: Commit and push exports
+        if: success()   # only run if previous steps succeeded
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -40,4 +52,3 @@ jobs:
             git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
           else
             echo "No changes to commit"
-          fi
