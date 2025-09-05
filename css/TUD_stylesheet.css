@@ -1,3 +1,7 @@
+/* TODO
+- topic
+*/
+
 :root {
   --tud-raspberry: rgb(165,0,52);
   --tud-raspberry-min: rgb(165,0,52,3%);
@@ -96,10 +100,9 @@ div.admonition.danger > div:first-child::after,
   color: var(--tud-red);
 }
 
-/* Admonition topic */
-
-aside.topic {
-  background-color: #f9fafbcc;
+.myst-admonition-attention, .myst-admonition-warning, .myst-admonition-important, .myst-admonition-caution {
+  border-color: var(--tud-orange);
+  background-color: var(--tud-orange-min);
 }
 
 /* Admonition Caution, Warning, Attention, Important */
@@ -107,41 +110,53 @@ aside.caution, aside.warning, aside.attention, aside.important {
   border-color: var(--tud-orange);
   background-color: var(--tud-orange-min);
 }
-aside.caution > div:first-child,
- aside.warning > div:first-child,
-  aside.attention > div:first-child,
-   aside.important > div:first-child {
+.myst-admonition-attention > div:first-child,
+.myst-admonition-warning > div:first-child,
+.myst-admonition-important > div:first-child,
+.myst-admonition-caution > div:first-child {
   background-color: var(--tud-orange-mid);
 }
-aside.caution > div:first-child::after,
- aside.warning > div:first-child::after,
-  aside.attention > div:first-child::after,
-   aside.important > div:first-child::after {
+.myst-admonition-caution > div:first-child::after,
+.myst-admonition-warning > div:first-child::after,
+.myst-admonition-attention > div:first-child::after,
+.myst-admonition-important > div:first-child::after {
   color: var(--tud-orange);
 }
 
 /* Admonition Hint, Note, SeeAlso, Tip, Remark */
-aside.hint, 
- aside.note, 
-  aside.seealso, 
-   aside.tip, 
-    aside.remark {
+.myst-admonition-hint, .myst-admonition-note, 
+  .myst-admonition-seealso, .myst-admonition-tip, .myst-admonition-remark {
   border-color: var(--tud-green);
   background-color: var(--tud-green-min);
 }
-aside.hint > div:first-child,
- aside.note > div:first-child,
-  aside.seealso > div:first-child,
-   aside.tip > div:first-child,
-    aside.remark > div:first-child  {
+.myst-admonition-hint > div:first-child,
+.myst-admonition-note > div:first-child,
+.myst-admonition-seealso > div:first-child,
+.myst-admonition-tip > div:first-child,
+.myst-admonition-remark > div:first-child  {
   background-color: var(--tud-green-mid);
 }
-div.admonition.hint > div:first-child::after,
- div.admonition.note > div:first-child::after,
-  div.admonition.seealso > div:first-child::after,
-   div.admonition.tip > div:first-child::after,
-    div.admonition.remark > div:first-child::after {
+
+.myst-admonition-hint > div:first-child::after,
+.myst-admonition-note > div:first-child::after,
+.myst-admonition-seealso > div:first-child::after,
+.myst-admonition-tip > div:first-child::after,
+.myst-admonition-remark > div:first-child::after {
   color: var(--tud-green);
+}
+
+/* Admonitions important */
+
+.myst-admonition-important {
+  border-color: var(--tud-orange);
+  background-color: var(--tud-orange-min);
+}
+.myst-admonition-important > div:first-child {
+  background-color: var(--tud-orange-mid);
+}
+
+.myst-admonition-important > div:first-child > svg {
+  fill: var(--tud-orange);
 }
 
  /* Admonition class */
@@ -154,20 +169,6 @@ aside.admonition > div:first-child {
 }
 aside.admonition > div:first-child::after {
   color: var(--tud-cyan);
-}
-
-/* Admonitions important */
-
-aside.important {
-  border-color: var(--tud-orange);
-  background-color: var(--tud-orange-min);
-}
-aside.important > div:first-child {
-  background-color: var(--tud-orange-mid);
-}
-
-aside.important > div:first-child > svg {
-  fill: var(--tud-orange);
 }
 
 /* PROOFS PRF:... */
