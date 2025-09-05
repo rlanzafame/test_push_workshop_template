@@ -1,5 +1,6 @@
 # This file was created automatically with `myst init --gh-pages` 🪄 💚
 # Ensure your GitHub Pages settings for this repository are set to deploy with **GitHub Actions**.
+# ... 
 
 name: MyST GitHub Pages Deploy
 on:
@@ -36,24 +37,6 @@ jobs:
           node-version: 18.x
       - name: Install MyST Markdown
         run: npm install -g mystmd
-      # - name: Setup TeX Live
-      #   uses: teatimeguest/setup-texlive-action@v3
-      #   with:
-      #     packages: |  
-      #       scheme-basic
-      #       xetex
-      #       latexmk
-      #       hyperref
-      #       microtype
-      #       caption
-      #       xcolor
-      #       changepage
-      #       amsfonts
-      #       enumitem
-      #       framed
-      #       booktabs
-      # - name: Build PDF Assets
-      #   run: myst build --pdf      
       - name: Build HTML Assets
         run: myst build --html
       - name: Upload artifact

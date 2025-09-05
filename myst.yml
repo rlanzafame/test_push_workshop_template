@@ -11,7 +11,7 @@ project:
     - id: output-pdf
   exports:
     - format: pdf
-      template: plain_latex_book 
+      template: plain_latex_book
       output: exports/book.pdf
       id: output-pdf
   # To autogenerate a Table of Contents, run "myst init --write-toc"
@@ -19,8 +19,10 @@ site:
   template: book-theme
   options:
     favicon: favicon.ico
+    style: ./css/TUD_stylesheet.css
     logo: Figuren/site_logo.png
     folders: false
+  
   actions:
     - title: report issue
       url: https://github.com/TUD-SEEd/template/issues
