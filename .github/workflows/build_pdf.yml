@@ -30,14 +30,23 @@ jobs:
       - name: Build PDFs
         run: myst build --pdf
 
+      # Commit and push exports folder
       - name: Commit and push exports folder
-        working-directory: /github/workspace
         run: |
+        
+          # Check exports folder
+          ls -R exports || echo "exports folder missing"
+
+          # Configure git
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          ls -R exports || echo "exports folder missing"
-          git add -A exports
-          timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          git commit -m "Update exports folder (${timestamp}) [skip ci]" || echo "No changes to commit"
-          git push origin main
 
+          # Commit only if there are changes
+          git add -A exports
+          if ! git diff --cached --quiet; then
+            timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            git commit -m "Update exports folder (${timestamp}) [skip ci]"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
