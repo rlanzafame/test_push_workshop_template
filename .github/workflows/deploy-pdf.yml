@@ -13,10 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repo
       - uses: actions/checkout@v3
-
-      # 2️⃣ Install minimal dependencies
       - name: Install LaTeX + Python packages
         run: |
           sudo apt-get update
@@ -30,12 +27,8 @@ jobs:
             npm
           python -m pip install --upgrade pip
           pip install mystmd
-
-      # 3️⃣ Build PDFs
       - name: Build PDFs
         run: myst build --pdf
-
-      # 4️⃣ Commit and push exports folder if changed
       - name: Commit and push exports folder
         run: |
           git config user.name "github-actions[bot]"
@@ -47,7 +40,7 @@ jobs:
           # Commit if there are changes
           if ! git diff --cached --quiet; then
             timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-            git commit -m "Update exports folder (${timestamp}) [skip ci]"
+            git commit -m "Update exports folder (${timestamp})"
             
             # Push using the built-in GITHUB_TOKEN
             git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
