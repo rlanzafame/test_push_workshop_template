@@ -1,3 +1,8 @@
+# potential todo's: 
+# - add version control for pdf. if broken, revert to older version of pdf file. 
+# - add functionality to use custom latex libraries etc
+#
+
 name: MyST PDF builder
 
 on:
