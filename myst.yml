@@ -6,7 +6,7 @@ project:
   # description:
   # keywords: []
   authors: [Freek Pols]
-  github: https://github.com/TUD-SEEd/template # Change this URL to your GitHub repository
+  github: https://github.com/TUD-JB-Templates/JB2 # Change this URL to your GitHub repository
   downloads:
     - id: output-pdf
   exports:
@@ -20,9 +20,9 @@ site:
   options:
     favicon: favicon.ico
     style: ./css/TUD_stylesheet.css
-    logo: Figuren/site_logo.png
+    logo: Figures/logo.png
     folders: false
   
   actions:
     - title: report issue
-      url: https://github.com/TUD-SEEd/template/issues
+      url: https://github.com/TUD-JB-Templates/JB2/issues

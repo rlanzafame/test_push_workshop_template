@@ -1,5 +1,5 @@
 ---
-title: Template
+title: TUD JB2 Template
 site:
   hide_outline: true
   hide_toc: true
