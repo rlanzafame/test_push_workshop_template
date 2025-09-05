@@ -14,21 +14,19 @@ jobs:
     steps:
       # 1️⃣ Checkout repo
       - uses: actions/checkout@v3
-
+      - uses: typst-community/setup-typst@v4
       # 2️⃣ Install Python + MyST
-      - name: Set up Python and install MyST
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y nodejs npm
-          python -m pip install --upgrade pip
-          pip install mystmd
+      # - name: Set up Python and install MyST
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y nodejs npm
+      #     python -m pip install --upgrade pip
+      #     pip install mystmd
       
 
       # 3️⃣ Install Typst (latest release via official install script)
       - name: Install Typst
         run: |
-          curl -fsSL https://typst.community/typst-install/install.sh | sh
-          echo "$HOME/.typst/bin" >> $GITHUB_PATH
           typst --version
 
       # 4️⃣ Build PDFs with Typst
