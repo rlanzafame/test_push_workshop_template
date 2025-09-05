@@ -1,0 +1,66 @@
+name: MyST Typst PDF Builder
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repo
+      - uses: actions/checkout@v3
+
+      # 2️⃣ Install Python + MyST
+      - name: Set up Python and install MyST
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nodejs npm
+          python -m pip install --upgrade pip
+          pip install mystmd
+      - name: Check for Typst export
+        id: typst-check
+        run: |
+          python - <<'EOF'
+          import yaml, os
+          with open("myst.yml") as f:
+              cfg = yaml.safe_load(f)
+          exports = cfg.get("exports", [])
+          typst_found = any(e.get("format") == "typst" for e in exports)
+          print(f"typst_export={typst_found}")
+          with open(os.environ['GITHUB_ENV'], 'a') as env_file:
+              env_file.write(f"typst_export={typst_found}\n")
+          EOF
+
+      # 3️⃣ Install Typst (latest release via official install script)
+      - name: Install Typst
+        if: env.typst_export == 'true'
+        run: |
+          curl -sSf https://typst.app/install.sh | sh
+          echo "$HOME/.typst/bin" >> $GITHUB_PATH
+          typst --version
+
+      # 4️⃣ Build PDFs with Typst
+      - name: Build PDFs
+        if: env.typst_export == 'true'
+        run: myst build --typst
+
+      # 5️⃣ Commit and push exports folder
+      - name: Commit and push exports
+        if: env.typst_export == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add -A exports
+          if ! git diff --cached --quiet; then
+            timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+            git commit -m "Update exports folder (${timestamp})"
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+          else
+            echo "No changes to commit"
+          fi
