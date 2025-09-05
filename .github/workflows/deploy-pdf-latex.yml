@@ -1,4 +1,4 @@
-name: MyST PDF Builder [LaTeX Minimal]
+name: MyST PDF Builder [LaTeX]
 
 on:
   workflow_dispatch:
