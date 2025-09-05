@@ -27,7 +27,7 @@ jobs:
       # 3️⃣ Install Typst (latest release via official install script)
       - name: Install Typst
         run: |
-          curl -sSf https://typst.app/install.sh | sh
+          curl -fsSL https://typst.community/typst-install/install.sh | sh
           echo "$HOME/.typst/bin" >> $GITHUB_PATH
           typst --version
 
