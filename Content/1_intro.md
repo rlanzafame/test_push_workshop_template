@@ -73,3 +73,16 @@ a great movei
 
 option without embed link
 ```
+
+
+````{example} Hier een neseted voorbeeld
+blabla
+
+
+```{figure} ../Figures/Cover.PNG
+:name: no_name
+
+Figuur
+```
+
+````

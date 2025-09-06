@@ -1,84 +1,106 @@
 // example.mjs
 
-/* Custom "example" admonition */
+// Helpers
+const parseInline = (s, ctx) => {
+  const txt = (s || "").trim();
+  if (!txt) return [{ type: "text", value: "" }];
+  const tree = ctx.parseMyst(txt);
+  const first = tree?.children?.[0];
+  return (first?.type === "paragraph" ? first.children : tree?.children) ?? [{ type: "text", value: txt }];
+};
+
+const parseBlocks = (s, ctx) => {
+  const tree = ctx.parseMyst(s || "");
+  const kids = tree?.children ?? [];
+  return kids.length ? kids : [{ type: "paragraph", children: [{ type: "text", value: (s || "").trim() }] }];
+};
+
 const example = {
   name: "example",
-  doc: "A custom admonition that uses a specific color.",
-  arg: { type: String, doc: "The title of the admonition." },
-  options: { collapsed: { type: Boolean, doc: "Whether to collapse the admonition." } },
-  body: { type: String, doc: "The body of the directive." },
+  doc: "Custom admonition that tolerates block content (e.g. figures).",
+  arg: { type: String, doc: "Title" },
+  options: { collapsed: { type: Boolean, doc: "Collapse state" } },
+  body: { type: String, doc: "Body" },
   run(data, vfile, ctx) {
     const title = (data.arg || "").trim();
     const body = (data.body || "").trim();
 
-    return [{
+    // Belangrijk: gebruik een "bekende" soort, bv. "note"
+    // (exporter kent 'note'/'tip'/'warning'/'info' etc.)
+    const kind = "note";
+
+    const node = {
       type: "admonition",
-      // keep "kind" generic; PDF styling is LaTeX-side, not CSS
-      kind: "admonition",
-      // IMPORTANT: class used by the transform below
-      class: "admonition-example",
+      kind,                     // <-- geen "admonition" maar bv. "note"
+      classes: ["admonition-example"],
+      class: "admonition-example", // <-- zet ook 'class' voor compat
       icon: false,
       children: [
-        {
-          type: "admonitionTitle",
-          // class here likely won’t round-trip, but harmless to leave
-          class: "admonition-title-example",
-          children: ctx.parseMyst(`${title}`)?.children?.[0]?.children ?? [{ type: "text", value: title }]
-        },
-        {
-          type: "paragraph",
-          children: ctx.parseMyst(body)?.children ?? [{ type: "text", value: body }]
-        }
-      ]
-    }];
+        { type: "admonitionTitle", classes: ["admonition-title-example"], children: parseInline(title, ctx) },
+        ...parseBlocks(body, ctx), // <-- laat blocks zoals figure intact
+      ],
+    };
+
+    return [node];
   }
 };
 
-/* Transform that rewrites the custom admonition for PDF builds */
+// Optioneel: transform die titels normaliseert in PDF-builds
 const exampleTransform = {
   name: "conditional-example",
-  doc: "Normalize custom example admonitions in PDF builds.",
   stage: "document",
-  plugin: (opts, utils) => (tree) => {
-    const isPDF = process.argv.some(arg => arg.includes("pdf"));
-    if (!isPDF) return;
+  plugin: () => (tree) => {
+    // Detecteer PDF/Typst run (pas evt. aan naar jouw pipeline)
+    const looksLikePdf =
+      process.argv.some(a => /pdf|xelatex|typst/i.test(a)) ||
+      /pdf|xelatex|typst/i.test(process.env.MYST_TARGET || "");
 
-    const getText = (node) => {
-      if (!node) return "";
-      if (node.type === "text" && typeof node.value === "string") return node.value;
+    if (!looksLikePdf) return;
+
+    // Kleine recursive visitor (geen utils.visit nodig)
+    const visit = (node, fn) => {
+      if (!node || typeof node !== "object") return;
+      fn(node);
       const kids = Array.isArray(node.children) ? node.children : [];
+      for (const child of kids) visit(child, fn);
+    };
+
+    const getText = (n) => {
+      if (!n) return "";
+      if (n.type === "text") return n.value || "";
+      const kids = Array.isArray(n.children) ? n.children : [];
       return kids.map(getText).join("");
     };
 
-    const rootChildren = tree.children?.[0]?.children || [];
-    rootChildren.forEach((node) => {
+    visit(tree, (node) => {
       if (node?.type !== "admonition") return;
 
-      const classes = node.classes || node.class || node.className || null;
-      const hasExampleClass =
-        (typeof classes === "string" && classes.includes("admonition-example")) ||
-        (Array.isArray(classes) && classes.includes("admonition-example"));
+      const classes = node.classes ?? node.class ?? node.className ?? [];
+      const hasExample =
+        Array.isArray(classes)
+          ? classes.includes("admonition-example")
+          : String(classes).includes("admonition-example");
+      if (!hasExample) return;
 
-      if (!hasExampleClass) return;
-
-      // Rewrite title to "Example: <title>"
+      // Titel normaliseren
       const idx = (node.children || []).findIndex(c => c.type === "admonitionTitle");
       const titleNode = idx >= 0 ? node.children[idx] : null;
-      const originalTitle = (getText(titleNode) || "").trim();
+      const original = (getText(titleNode) || "").trim();
+      const newTitle = `Example: ${original}`;
 
       if (titleNode) {
-        titleNode.children = [{ type: "text", value: `Example: ${originalTitle}` }];
+        titleNode.children = [{ type: "text", value: newTitle }];
       } else {
         node.children = [
-          { type: "admonitionTitle", children: [{ type: "text", value: `Example: ${originalTitle}` }] },
-          ...(node.children || [])
+          { type: "admonitionTitle", children: [{ type: "text", value: newTitle }] },
+          ...(node.children || []),
         ];
       }
 
-      // Normalize kind so LaTeX/PDF uses a known style (CSS doesn’t apply in PDFs)
+      // Zorg dat PDF-styling een bekende soort krijgt
       node.kind = "note";
 
-      // Optionally drop the custom class in PDFs
+      // (optioneel) custom class weghalen in PDFs
       if (Array.isArray(node.classes)) {
         node.classes = node.classes.filter(c => c !== "admonition-example");
       } else if (typeof node.class === "string") {
@@ -88,7 +110,6 @@ const exampleTransform = {
   },
 };
 
-// ✅ Export BOTH directive and transform in one plugin
 const plugin = {
   name: "example-plugin",
   directives: [example],
