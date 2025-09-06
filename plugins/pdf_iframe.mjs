@@ -78,7 +78,7 @@ const iframeTransform = {
                     node.children = [
                         {
                             type: "image",
-                            url: `images/qrcode_${node.qr_index}.png`,  // make sure
+                            url: `../images/qrcode_${node.qr_index}.png`,  // make sure
                             alt: "QR code",
                             title: "scan the QR code to open the link",
                             width: "200px",
