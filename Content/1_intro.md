@@ -55,3 +55,7 @@ test 123
 ```{example} Here is an example
 testing conversion
 ```
+
+```{intermezzo} And an intermezzo
+intermezzo
+```
