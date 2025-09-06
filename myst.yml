@@ -14,7 +14,7 @@ project:
     - plugins/experiment.mjs
     - plugins/pdf_exercise.mjs
     - plugins/example.mjs
-    # - plugins/convexp.mjs
+    - plugins/convexp.mjs
 
   downloads:
     - id: output-pdf

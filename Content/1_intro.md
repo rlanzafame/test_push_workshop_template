@@ -38,10 +38,11 @@ width: 100%
 The output of the template book is the same as your book.
 ```
 
-
+<!-- 
 ```{experiment} 123
 admonitions are cool
 ``` 
+-->
 
 
 
@@ -50,3 +51,7 @@ admonitions are cool
 ```{exercise} Testing
 test 123
 ``` 
+
+```{example} Here is an example
+testing conversion
+```
