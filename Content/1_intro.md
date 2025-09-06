@@ -59,3 +59,17 @@ testing conversion
 ```{intermezzo} And an intermezzo
 intermezzo
 ```
+
+```{iframe} https://www.youtube.com/embed/oL4-ipL62pQ?si=3G_VbzWoJ2cFF_A3
+:name: vid_1
+
+a great movei
+```
+
+
+
+```{iframe} https://www.youtube.com/watch?v=oL4-ipL62pQ&t
+:name: vid2
+
+option without embed link
+```

@@ -15,6 +15,8 @@ project:
     - plugins/pdf_exercise.mjs
     - plugins/example.mjs
     - plugins/intermezzo.mjs
+    - plugins/iframe2.mjs
+#    - pdf_iframe.mjs
 
   downloads:
     - id: output-pdf
