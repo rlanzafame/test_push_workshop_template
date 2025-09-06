@@ -6,12 +6,21 @@ project:
   # description:
   # keywords: []
   authors: [Freek Pols]
+  # abstract: Optional
+  date: 2025-06-09
   github: https://github.com/TUD-JB-Templates/JB2 # Change this URL to your GitHub repository
+
+  plugins: 
+    - plugins/experiment.mjs
+    - plugins/pdf_exercise.mjs
+    - plugins/example.mjs
+    # - plugins/convexp.mjs
+
   downloads:
     - id: output-pdf
   exports:
-    - format: pdf
-      template: plain_latex_book
+    - format: typst
+      template: laprint_template_TUD
       output: exports/book.pdf
       id: output-pdf
   # To autogenerate a Table of Contents, run "myst init --write-toc"

@@ -38,3 +38,15 @@ width: 100%
 The output of the template book is the same as your book.
 ```
 
+
+```{experiment} 123
+admonitions are cool
+``` 
+
+
+
+
+
+```{exercise} Testing
+test 123
+``` 
