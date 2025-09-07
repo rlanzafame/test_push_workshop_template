@@ -2,7 +2,7 @@
 version: 1
 project:
   id: 7204695b-7485-4989-863c-16cf6e4db155
-  title: Template
+  title: Template for TU Delft JB  
   # description:
   # keywords: []
   authors: [Freek Pols]
@@ -15,15 +15,14 @@ project:
     - plugins/pdf_exercise.mjs
     - plugins/example.mjs
     - plugins/intermezzo.mjs
-    #- plugins/iframe2.mjs
     - plugins/pdf_iframe.mjs
 
   downloads:
     - id: output-pdf
   exports:
     - format: typst
-      template: laprint_template_TUD
-      output: exports/book.pdf
+      template: ./laprint_template_TUD
+      output: exports/book2.pdf
       id: output-pdf
   # To autogenerate a Table of Contents, run "myst init --write-toc"
   toc:
